@@ -20,8 +20,8 @@ bot.on("message", async message => {
         case "hi":	            
             message.channel.send("hi");	            
             break;
-        case "avatar":
-            message.reply(message.author.displayAvatarURL({size:4096 }));
+        case "ava":
+            message.channel.send(message.author.displayAvatarURL({size:4096}));
             break;
     }
     	
