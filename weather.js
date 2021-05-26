@@ -1,12 +1,17 @@
-const Discord = require("discord.js");	
-const fetch = require("node-fetch");
-const config_key = require("./weather.json");
+var request = require('request');
+var {weather} = require('./weather.json')
 
-const base_url = `http://api.weatherapi.com/v1/current.json?key=${config_key}`;
-async function getWeather(_city){
-    let weather = await fetch(
-        base_url"&q="+_city;
-    );
+var options = {
+  'method': 'GET',
+  'url': `http://api.airvisual.com/v2/nearest_city?key=${weather}`,
+  'headers': {
+  },
+  formData: {
 
+  }
+};
 
-}
+request(options, function (error, response) {
+  if (error) throw new Error(error);
+  console.table(response.body);
+});
