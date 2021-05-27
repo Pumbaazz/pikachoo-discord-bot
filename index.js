@@ -1,8 +1,10 @@
 const Discord = require("discord.js");
 const { stripIndents } = require("common-tags");
+var request = require('request');
 const { MessageEmbed } = require("discord.js")	
-const config = require("./config.json");
-const PREFIX = '!';
+require('dotenv').config();
+
+const PREFIX = '.';
 
 var bot = new Discord.Client();
 
@@ -39,6 +41,10 @@ bot.on("message", function(message) {
         case "whois":
             var _user = userInfo();
             message.channel.send(_user);
+            break;
+
+        case  "wea":
+            weatherAPI();
             break;
         default:
             message.channel.send("invalid message");
@@ -77,19 +83,41 @@ bot.on("message", function(message) {
         const embed = new MessageEmbed()
             .setTitle(user.username)
             .setColor(randomColor)
-            .setImage(user.displayAvatarURL({size: 1024}))
+            .setImage(user.displayAvatarURL({size: 128}))
             .addField('Thông tin người dùng:', stripIndents `
             **- Tên người dùng**: ${user.username}
             **- Tạo vào lúc**: ${user.createdAt}
-
             `
-                
-                
             ,true);
         return embed;
+    }
+
+    function weatherAPI(){
+        var options = {
+            'method': 'GET',
+            'url': `http://api.airvisual.com/v2/nearest_city?key=${process.env.weather_api_key}`,
+            'headers': {
+            }
+          };
+        // fetch data respond
+        request(options, function (error, response) {
+            if (error) throw new Error(error);
+            var parsedBody = JSON.parse(response.body);
+            var randomColor = Math.floor(Math.random()*16777215).toString(16);
+            var  weatherImg = "https://www.airvisual.com/images/"+ parsedBody.data.current.weather.ic+".png";
+
+            const embed = new MessageEmbed()
+                .setTitle("hihi")
+                .setColor(randomColor)
+                .setThumbnail(weatherImg)
+                .addField(`Thanh pho`,`${parsedBody.data.city}`, true)
+                .addField(`Nhiet do hien tai la: `,`${parsedBody.data.current.weather.tp}`)
+                .addField(`Do am hien tai la: `,`${parsedBody.data.current.weather.hu}`, true)
+            return message.channel.send(embed);
+          });
     }
 });
 
 
 
-bot.login(config.token);
+bot.login(process.env.token);

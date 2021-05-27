@@ -1,17 +1,21 @@
-var request = require('request');
-var {weather} = require('./weather.json')
+var axios = require('axios');
+var FormData = require('form-data');
+var data = new FormData();
 
-var options = {
-  'method': 'GET',
-  'url': `http://api.airvisual.com/v2/nearest_city?key=${weather}`,
-  'headers': {
-  },
-  formData: {
+require('dotenv').config();
 
-  }
+
+
+var config = {
+  method: 'get',
+  url: `http://api.airvisual.com/v2/nearest_city?key=${process.env.weather_api_key}`,
+  headers: { }
 };
 
-request(options, function (error, response) {
-  if (error) throw new Error(error);
-  console.table(response.body);
+axios(config)
+.then(function (response) {
+  console.log(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
 });
