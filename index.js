@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 require('dotenv').config();
 
-const prefix = '-';
+const prefix = 'zzz';
  
 const fs = require('fs');
  

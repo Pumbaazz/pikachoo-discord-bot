@@ -20,19 +20,21 @@ module.exports={
             var user = message.mentions.users.first();
             var biteQuote_1 = ``;
             if(!user){
-                biteQuote_1 = `${message.author.username} wanna ${content}`;
+            const embed = new Discord.MessageEmbed()
+                .setTitle(`${message.author.username} wanna ${content}`)
+                .setColor(randomColor)
+                .setImage(parsedBody.results[randomGif].media[0].gif.url)
+            return message.channel.send(embed);
             }
             else{
-                biteQuote_1 = `${message.author.username} wanna ${content} ${user.username}`
+            const embed = new Discord.MessageEmbed()
+                .setTitle(`${message.author.username}`+ ` wanna `+ ` ${content} `+`${user.username}`)
+                .setColor(randomColor)
+                .setImage(parsedBody.results[randomGif].media[0].gif.url)
+            return message.channel.send(embed);
             }
             //ping string length 22
             //console.log(biteQuote_1);
-            const embed = new Discord.MessageEmbed()
-                .addField(biteQuote_1)
-                .setColor(randomColor)
-                .setImage(parsedBody.results[randomGif].media[0].gif.url)
-
-            return message.channel.send(embed);
         });
     }
 }
