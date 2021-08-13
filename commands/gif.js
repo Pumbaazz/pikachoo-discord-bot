@@ -15,7 +15,7 @@ module.exports={
         await request(options, (err, response) => {
             if (err) { return console.log(err); }
             var parsedBody = JSON.parse(response.body);
-            //console.log(parsedBody.results);
+            //console.log(parsedBody.results[randomGif].url);
 
             var user = message.mentions.users.first();
             var biteQuote_1 = ``;
@@ -25,11 +25,12 @@ module.exports={
             else{
                 biteQuote_1 = `${message.author.username} wanna ${content} ${user.username}`
             }
-            
+            //ping string length 22
+            //console.log(biteQuote_1);
             const embed = new Discord.MessageEmbed()
-                .setTitle(biteQuote_1)
+                .addField(biteQuote_1)
                 .setColor(randomColor)
-                .setImage(parsedBody.results[randomGif].url)
+                .setImage(parsedBody.results[randomGif].media[0].gif.url)
 
             return message.channel.send(embed);
         });

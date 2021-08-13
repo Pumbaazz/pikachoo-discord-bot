@@ -58,6 +58,9 @@ client.on('message', message =>{
             }
             client.commands.get('gif').execute(message, Discord,contents, process.env.tenor);
             break;
+        case "help":
+            client.commands.get('help').execute(message, Discord);
+            break;
         default:
             message.channel.send("Sai cú pháp gì gì đó rồi không rõ nữa");
     }
