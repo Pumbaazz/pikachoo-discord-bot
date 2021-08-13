@@ -42,11 +42,24 @@ client.on('message', message =>{
             client.commands.get('whois').execute(message, Discord);
             break;
         case "wea":
+            if(contents.length === 0){
+                message.channel.send("Thiếu thiếu cái gì á ta");
+                break;
+            }
             client.commands.get('weather').execute(message, Discord,contents, process.env.weather_api_key_2);
             break;
-
+        case "girl":
+            client.commands.get('girl').execute(message, Discord, process.env.usn, process.env.pwd, process.env.db, process.env.collection_1);
+            break;
+        case "gif":
+            if(contents.length === 0){
+                message.channel.send("Thiếu thiếu cái gì á ta");
+                break;
+            }
+            client.commands.get('gif').execute(message, Discord,contents, process.env.tenor);
+            break;
         default:
-            message.channel.send("đá vô mỏ mày giờ");
+            message.channel.send("Sai cú pháp gì gì đó rồi không rõ nữa");
     }
 });
 client.login(process.env.token);
