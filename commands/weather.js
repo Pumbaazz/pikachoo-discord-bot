@@ -4,10 +4,12 @@ module.exports={
     name:'weather',
     description:"get nearby city location's weather",
     execute(message,Discord,city,apikey){
+        
         const options = {
             method: 'GET',
-            url: `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
+            url: `http://api.openweathermap.org/data/2.5/weather?q=${encodeURI(city).replace(" ", "%20")}&appid=${apikey}`
         };
+        console.log(options.url);
         // fetch data respond
         request(options, async function (error, response) {
             if (error) throw new Error(error);
